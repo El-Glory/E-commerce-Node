@@ -3,7 +3,7 @@ const Product = require('./Product.js');
 const Schema = mongoose.Schema;
 
 
-const userSchema = new Schema {
+const userSchema = new Schema ({
 	firstName : {
 		type: String,
 		required: true,
@@ -39,7 +39,7 @@ const userSchema = new Schema {
       default: 0,
     },
   }
-}
+})
 
 
 module.exports = mongoose.model("User", userSchema)
