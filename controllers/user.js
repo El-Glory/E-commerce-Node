@@ -83,10 +83,16 @@ exports.patchUser =  async(req, res , next) => {
 	    }
 
 	    const user = await User.findById(req.userId)
-	    user.firstName = firstName;
-	    user.lastName = lastName;
-	    user.email = email;
-	    user.password = password;
+	    // user.firstName = firstName;
+	    // user.lastName = lastName;
+	    // user.email = email;
+	    // user.password = password;
+	    if(user.lastName = lastName)
+	    	req.body.lastName
+	    
+	    if(user.firstName = firstName)
+	    	req.body.firstName
+	    
 
 	    let newUser = user.save();
 	    newUser = await User.populate(newUser, { path: "cart.items.product" });
@@ -96,4 +102,13 @@ exports.patchUser =  async(req, res , next) => {
     }
     
 }
+
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId).populate("cart.items.product");
+    res.json({ user });
+  } catch (error) {
+    return errorHandler(next, error.message);
+  }
+};
 

@@ -34,4 +34,5 @@ const patchUserValidation = (data) => {
 
 
 module.exports.signupValidation = signupValidation;
+module.exports.signinValidation = signinValidation;
 module.exports.patchUserValidation = patchUserValidation;
