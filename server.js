@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
   await mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
+    useFindAndModify: false
   });
   app.listen(process.env.PORT || 5000);
   console.log(`connected to ${process.env.PORT} `)

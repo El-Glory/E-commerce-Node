@@ -52,7 +52,7 @@ exports.Signin = async(req, res, next) => {
   		
   	})
     //const { firstName, lastName, email, id } = user;
-  		res.json({user})
+  		res.json({token,user})
   }catch(error){
   	return errorHandler(next, error.message);
   }
@@ -74,29 +74,22 @@ exports.patchUser =  async(req, res , next) => {
 	if (error)
       return res.status(400).json({error: error.details[0].message})
 
-    let {firstName, lastName, email, password} =  req.body
-
     try{
-	    const emailExists = await User.findOne({ email });
-	    if (emailExists && emailExists._id != req.userId) {
-	      return errorHandler(next, "Email doesn't exists!", 422);
-	    }
+    	const  id  = req.params.id;
+    	//const {email} = req.body
+    	const updates = req.body;
+	    // const emailExists = await User.findOne({ email });
+	    // if (emailExists && emailExists._id != req.userId) {
+	    //   return errorHandler(next, "Email doesn't exists!", 422);
+	    // }
 
-	    const user = await User.findById(req.userId)
-	    // user.firstName = firstName;
-	    // user.lastName = lastName;
-	    // user.email = email;
-	    // user.password = password;
-	    if(user.lastName = lastName)
-	    	req.body.lastName
-	    
-	    if(user.firstName = firstName)
-	    	req.body.firstName
-	    
+	    const user = await User.findByIdAndUpdate({_id: (id)},{$set:updates})
 
 	    let newUser = user.save();
 	    newUser = await User.populate(newUser, { path: "cart.items.product" });
+	    //console.log(req.userId)
 	    res.json({ user: newUser });
+	    //res.json({user})
     }catch(error){
     	return errorHandler(next, error.message);
     }

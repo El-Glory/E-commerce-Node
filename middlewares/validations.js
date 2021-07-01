@@ -30,9 +30,21 @@ const patchUserValidation = (data) => {
 	return schema.validate(data);
 };
 
+const postProduct = (data) => {
+	 const schema = Joi.object({
+		name: Joi.string().required().trim(),
+		description: Joi.string().trim(),
+		image: Joi.string().required().trim(),
+		quantity: Joi.string().required().min(1),
+		price: Joi.string().required(),
+		status:  Joi.string()
+	});
+	return schema.validate(data)
+}
 
 
 
 module.exports.signupValidation = signupValidation;
 module.exports.signinValidation = signinValidation;
 module.exports.patchUserValidation = patchUserValidation;
+module.exports.postProduct = postProduct;

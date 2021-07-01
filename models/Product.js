@@ -69,5 +69,29 @@ const productSchema = new Schema({
   },
 });
 
+productSchema.methods.addReview = async function (
+  user,
+  order,
+  rating,
+  comment
+) {
+  const reviewExist = this.reviews.find((review) => review.order == order);
+
+  if (reviewExist) throw new Error("Already reviewed!");
+
+  const review = { user, order, rating, comment };
+  this.reviews = [review, ...this.reviews];
+  this.rating =
+    this.reviews.reduce((total, review) => total + review.rating, 0) /
+    this.reviews.length;
+
+  const product = await this.save();
+  return product;
+};
+
+productSchema.statics.incrementSold = function () {
+  console.log(this);
+};
+
 
 module.exports = mongoose.model("Product", productSchema)
